@@ -5,7 +5,7 @@
 </script>
 
 <main class="app">
-  <div class="container">
+  <div class="container mt-auto">
     <h1 class="app-title text-center text-light mb-5">
       ¿Qué debería estudiar?
     </h1>
@@ -34,6 +34,13 @@
       </div>
     </div>
   </div>
+
+  <footer class="mt-auto">
+    <p class="text-muted">
+      Developed by <a class="text-info" href="https://astagg.me">Álvaro Stagg</a
+      >
+    </p>
+  </footer>
 </main>
 
 <style>
@@ -42,10 +49,9 @@
     height: 100vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    background-color: #1c1c1c;
   }
 
   .app-title {
