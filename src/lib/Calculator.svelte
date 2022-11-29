@@ -3,7 +3,7 @@
   import { Engine } from "json-rules-engine";
   import { ProfessionCalculator } from "./profession";
 
-  let result = "";
+  let result = [];
 
   const engine = new Engine();
   const professionCalc = new ProfessionCalculator();
@@ -55,9 +55,6 @@
       all: [
         { fact: "mathScore", operator: "greaterThanInclusive", value: 60 },
         { fact: "naturalScore", operator: "greaterThanInclusive", value: 60 },
-        { fact: "writtingScore", operator: "lessThanInclusive", value: 59 },
-        { fact: "languageScore", operator: "lessThanInclusive", value: 59 },
-        { fact: "socialScore", operator: "lessThanInclusive", value: 59 },
       ],
     },
     event: {
@@ -78,12 +75,12 @@
             {
               fact: "engineeringDesire",
               operator: "greaterThanInclusive",
-              value: 6,
+              value: 5,
             },
             {
               fact: "scienceDesire",
               operator: "greaterThanInclusive",
-              value: 6,
+              value: 5,
             },
           ],
         },
@@ -98,7 +95,7 @@
       type: "studyHumanitiesOrHealth",
       params: {
         result:
-          "Parece que te gusta la ingeniería y la ciencia pero se te dan mal las matemáticas. Deberías estudiar humanidades o ciencias de la salud",
+          "Parece que te gusta la ingeniería y/o la ciencia pero se te dan mal las matemáticas. Deberías estudiar humanidades o ciencias de la salud",
       },
     },
   });
@@ -129,7 +126,7 @@
   });
 
   values.subscribe((value) => {
-    result = "";
+    result = [];
 
     highestPreferenceSubject = professionCalc.getHighestPreference(
       value.preferences
@@ -148,9 +145,18 @@
     };
 
     engine.run(facts).then(({ events }) => {
-      events.map((event) => (result = event.params.result));
+      const rs = [];
+      events.map((event) => {
+        console.log(event.params.result);
+        rs.push(event.params.result);
+      });
+      result = rs;
     });
   });
+
+  function handleResetEvent() {
+    result = [];
+  }
 </script>
 
 <div>
@@ -158,6 +164,16 @@
     <h3 class="text-center fw-bold mb-2">Deberías estudiar...</h3>
     <hr />
 
-    <p>{result}</p>
+    <ul>
+      {#each result as rs}
+        <li>{rs}</li>
+      {/each}
+    </ul>
+
+    <div class="d-grid gap-2">
+      <button on:click={handleResetEvent} type="button" class="btn btn-danger "
+        >Reiniciar</button
+      >
+    </div>
   </form>
 </div>
