@@ -9,7 +9,7 @@ npm install
 pnpm install
 ```
 
-Run the project with:
+Run the project with **one** of the following commands:
 
 ```shell
 # If you use npm
